@@ -1,14 +1,5 @@
 
-<html>
-<body>
-
-
-
 <?php
- $u = $_POST['user'];
- $p = $_POST['pass'];
- echo "Welcome".$u;
- echo "your password is:".$p;
- ?>
-</body>
-</html>
+http_response_code(410);
+header('Content-Type: text/plain; charset=utf-8');
+echo 'This demo endpoint is disabled. It did not authenticate users.';

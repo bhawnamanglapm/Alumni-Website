@@ -16,23 +16,23 @@
   <form method="POST" action="two.php">
     <div class="form-group">
       <label for="roll">Roll Number:</label>
-      <input type="number" class="form-control" id="email" placeholder="Enter Roll number" name="roll">
+      <input type="text" class="form-control" id="roll" placeholder="Enter Roll number" name="roll" maxlength="32" required>
     </div>
     <div class="form-group">
       <label for="name">Name:</label>
-      <input type="text" class="form-control" id="email" placeholder="Enter Name" name="name">
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" maxlength="120" required>
     </div>
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email">
+      <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" maxlength="254" required>
     </div>
     <div class="form-group">
       <label for="mob">Mobile:</label>
-      <input type="number" class="form-control" id="pwd" placeholder="Enter Mobile Number" name="mob">
+      <input type="tel" class="form-control" id="mob" placeholder="Enter Mobile Number" name="mob" maxlength="32" required>
     </div>
     <div class="form-group">
       <label for="address">Address:</label>
-      <textarea class="form-control" id="email" placeholder="Enter Your Address" name="address"></textarea>
+      <textarea class="form-control" id="address" placeholder="Enter Your Address" name="address" maxlength="1000" required></textarea>
       <center><button type="submit" class="btn btn-primary">Submit</button></center>
   </form></div>
 <div class="col-sm-4"></div>

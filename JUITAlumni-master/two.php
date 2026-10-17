@@ -1,47 +1,31 @@
 <?php
-$r = $_POST['roll'];
-$n = $_POST['name'];
-$e = $_POST['email'];
-$m = $_POST['mob'];
-$a = $_POST['address'];
-// echo "Welcome ".$n;
-// echo "<br>" ;
-// echo "Your roll no. is:".$r;
-// echo "<br>";
-$s = "localhost";
-$u = "root";
-$p = "";
-$d = "university";
+require_once __DIR__ . '/database.php';
 
-$con = new mysqli($s,$u,$p,$d);
+alumni_require_post();
+$values = alumni_form_values($_POST, array(
+    'roll' => 32,
+    'name' => 120,
+    'email' => 254,
+    'mob' => 32,
+    'address' => 1000,
+));
 
-//  if($con-> connect_error)
-//  {
-//   echo "Connection failed";
-//  }
+if ($values === false || filter_var($values['email'], FILTER_VALIDATE_EMAIL) === false) {
+    alumni_response(400, 'Registration not submitted', 'Enter all fields using a valid email address and try again.');
+}
 
-//  else
-//    echo "Connection Successful";
-  
+try {
+    $connection = alumni_db();
+    $statement = $connection->prepare(
+        'INSERT INTO student (roll, name, email, mob, address) VALUES (?, ?, ?, ?, ?)'
+    );
+    $statement->bind_param('sssss', $values['roll'], $values['name'], $values['email'], $values['mob'], $values['address']);
+    $statement->execute();
+    $statement->close();
+    $connection->close();
+} catch (Throwable $error) {
+    error_log('Alumni registration save failed: ' . $error->getMessage());
+    alumni_response(503, 'Registration unavailable', 'We could not save your request. Please try again later.');
+}
 
-
-   $q = "insert into student(roll, name, email, mob, address ) values ('$r','$n','$e','$m','$a')";
-   $res = mysqli_query($con, $q);
-   ?>
-
-   <html>
-   <head>
-<title></title>
-
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-   </head>
-
-   <body>
-<center><h1>Registered Successfully.....</h1>
-<button type="button" class="btn btn-primary"><a href="index.php" style="text-decoration: none; color: white;">Back</a></button></center>
-   </body>
+alumni_response(200, 'Registration received', 'Your registration details were saved.');
