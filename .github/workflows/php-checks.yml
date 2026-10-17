@@ -1,0 +1,43 @@
+name: PHP checks
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: alumni_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      ALUMNI_DB_HOST: 127.0.0.1
+      ALUMNI_DB_USER: root
+      ALUMNI_DB_PASSWORD: root
+      ALUMNI_DB_NAME: alumni_test
+      ALUMNI_DB_PORT: 3306
+      ALUMNI_TEST_MODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mysqli, curl
+      - name: Check PHP syntax
+        run: find JUITAlumni-master -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Test form handling against an isolated database
+        run: php tests/integration.php

@@ -183,11 +183,11 @@
     </div> -->
     <div class="form-group">
       <label for="name">Name:</label>
-      <input type="text" class="form-control" id="email" placeholder="Enter Name" name="nm">
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="nm" maxlength="120" required>
     </div>
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter Email" name="mail">
+      <input type="email" class="form-control" id="email" placeholder="Enter Email" name="mail" maxlength="254" required>
     </div>
     <!-- <div class="form-group">
       <label for="mob">Mobile:</label>
@@ -195,7 +195,7 @@
     </div> -->
     <div class="form-group">
       <label for="address">Message:</label>
-      <textarea class="form-control" id="email" placeholder="Enter Your Message" name="msg"></textarea>
+      <textarea class="form-control" id="message" placeholder="Enter Your Message" name="msg" maxlength="5000" required></textarea>
       
     </div>
     <center><button type="submit" class="btn btn-primary">Submit</button></center>
